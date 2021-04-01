@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{movie['original_title']}} details</title>
+
+</head>
+<body>
+
+{% extends "index.html" %}
+{% block content %}
+<h2>{{movie['original_title']}}</h2>
+<div class="row">
+  <div class="col"><img src="{{ tmdb_image_url(movie.backdrop_path, "w780") }}"></div>
+  <div class="col"><h4>{{ movie.tagline }}</h4>
+      <p>{{ movie.overview }}</p>
+  <h6>Budget</h6>
+      <p>{{ movie.budget }}</p>
+  <h6>Genre</h6>
+      <p>{{ genre_list(movie.genres) }}</p>
+  </div>
+</div>
+
+<h2>Cast</h2>
+
+<div class="container">
+ <div class="row">
+{% for actor in actors %}
+
+    <div class="col-sm">
+
+        <div class="card" style="width: 8rem;">
+  <img class="card-img-top" src="{{ tmdb_image_url(actor.profile_path, "w185") }}" alt="Card image cap">
+  <div class="card-body">
+    <p class="card-text">{{ actor.name }}</p>
+  </div>
+</div>
+
+    </div>
+{% endfor %}
+      </div>
+    </div>
+
+{% endblock %}
+
+</body>
+</html>

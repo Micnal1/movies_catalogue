@@ -28,7 +28,7 @@
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ml-auto">
           <li class="nav-item active">
-            <a class="nav-link" href="#">Home
+            <a class="nav-link" href="/">Home
               <span class="sr-only">(current)</span>
             </a>
           </li>
@@ -42,6 +42,10 @@
             <a class="nav-link" href="#">Contact</a>
           </li>
         </ul>
+        <form class="form-inline" action="/search" method="GET">
+    <input class="form-control mr-sm-2" type="text" value="{% if search_query %}{{ search_query }}{% endif %}" placeholder="Szukaj" aria-label="Search" name="query">
+    <button class="btn btn-outline-success" type="submit">Szukaj</button>
+</form>
       </div>
     </div>
   </nav>
