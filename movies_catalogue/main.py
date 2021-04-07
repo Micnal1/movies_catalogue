@@ -5,7 +5,7 @@ import requests
 
 
 def default_list(list_of_movies):
-    movie_category = ['popular','upcoming','now_playing',]
+    movie_category = ['popular','upcoming','now_playing','top_rated']
     if list_of_movies in movie_category:
         None
     else:
