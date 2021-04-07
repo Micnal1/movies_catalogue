@@ -3,15 +3,15 @@ from flask import Flask, render_template, request, url_for
 import tmdb_client
 import requests
 
-def default_list(list):
-    try:
-        if list == 'popular' or  list == 'upcoming' or  list == 'now_playing' or  list == 'top_rated':
-            None
-        else:
-            list = 'popular'
-    except:
+
+def default_list(list_of_movies):
+    movie_category = ['popular','upcoming','now_playing',]
+    if list_of_movies in movie_category:
         None
-    return list
+    else:
+        list_of_movies = 'popular'
+
+    return list_of_movies
 
 def select_list(selected_list):
     default_class = "btn btn-outline-info"
@@ -34,7 +34,7 @@ def homepage():
     selected_list = default_list(request.args.get('list_movies',"popular"))
     movies = tmdb_client.get_movies(how_many=5,list_movies=selected_list)
     buttons = select_list(selected_list)
-    return render_template("homepage.html", movies=movies, current_list=selected_list,buttons=buttons )
+    return render_template("homepage.html", movies=movies, current_list=selected_list, buttons=buttons)
 
 
 @app.route('/movie/<int:movie_id>')
