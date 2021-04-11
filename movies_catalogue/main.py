@@ -5,34 +5,33 @@ import requests
 
 
 def default_list(list_of_movies):
-    movie_category = ['popular','upcoming','now_playing','top_rated']
+    movie_category = ['popular', 'upcoming', 'now_playing', 'top_rated']
     if list_of_movies in movie_category:
-        None
+        pass
     else:
         list_of_movies = 'popular'
 
     return list_of_movies
 
+
 def select_list(selected_list):
     default_class = "btn btn-outline-info"
-    buttons = [default_class,default_class,default_class,default_class]
-    if selected_list == 'popular':
-        buttons[0] = "btn btn-primary"
-    elif selected_list == 'upcoming':
-        buttons[1] = "btn btn-primary"
-    elif selected_list == 'now_playing':
-        buttons[2] = "btn btn-primary"
-    elif selected_list == 'top_rated':
-        buttons[3] = "btn btn-primary"
+    buttons = {
+        'popular': [default_class, "Popular"],
+        'upcoming': [default_class, "Upcoming"],
+        'now_playing': [default_class, "Now Playing"],
+        'top_rated': [default_class, "Top Rated"]}
+    buttons[selected_list][0] = "btn btn-primary"
     return buttons
+
 
 app = Flask(__name__)
 
 
 @app.route('/')
 def homepage():
-    selected_list = default_list(request.args.get('list_movies',"popular"))
-    movies = tmdb_client.get_movies(how_many=5,list_movies=selected_list)
+    selected_list = default_list(request.args.get('list_movies', "popular"))
+    movies = tmdb_client.get_movies(how_many=5, list_movies=selected_list)
     buttons = select_list(selected_list)
     return render_template("homepage.html", movies=movies, current_list=selected_list, buttons=buttons)
 
@@ -58,6 +57,7 @@ def search():
 def utility_processor():
     def tmdb_image_url(path, size):
         return tmdb_client.get_poster_url(path, size)
+
     return {"tmdb_image_url": tmdb_image_url}
 
 
@@ -66,9 +66,11 @@ def genre():
     def genre_list(genres):
         types = ""
         for i in genres:
-            types +=f"{i['name']}, "
+            types += f"{i['name']}, "
         return types
+
     return {"genre_list": genre_list}
+
 
 if __name__ == "__main__":
     app.run(debug=True)

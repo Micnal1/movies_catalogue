@@ -10,21 +10,15 @@
 {% block content %}
 
 
+<div class="col-lg-12 mb-4">
 
-<div class="col-lg-12 mb-4" >
+    {% for list_type,btn_class in buttons.items() %}
 
-    <a data-toggle="button" href="{{ url_for('homepage', list_movies="popular") }}" class="{{ buttons[0] }}">Popular</a>
+    <a data-toggle="button" href="{{ url_for('homepage', list_movies=list_type)}}" class="{{ btn_class[0] }}">{{ btn_class[1] }}</a>
 
-    <a data-toggle="button" href="{{ url_for('homepage', list_movies="upcoming") }}" class="{{ buttons[1] }}">Upcoming</a>
-
-   <a data-toggle="button" href="{{ url_for('homepage', list_movies="now_playing") }}" class="{{ buttons[2] }}">Now Playing</a>
-
-    <a data-toggle="button" href="{{ url_for('homepage', list_movies="top_rated") }}" class="{{ buttons[3] }}">Top Rated</a>
-
+    {% endfor %}
 
 </div>
-
-
 
 
 <div class="container">
@@ -42,9 +36,9 @@
 </div>
     </div>
 
-{% endfor %}
-      </div>
+        {% endfor %}
     </div>
+</div>
 {% endblock %}
 </body>
 </html>
